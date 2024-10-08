@@ -12,9 +12,9 @@ export default function Tasks() {
   const [openModal, setOpenModal] = useState(false);
   const [bool, setBool] = useState(false);
 
-  const addTaskClick = (): void => {
+  function addTaskClick(): void {
     setOpenModal(true);
-  };
+  }
 
   const handleClose = (): void => {
     setOpenModal(false);
@@ -31,7 +31,11 @@ export default function Tasks() {
     console.log(taskManager.current.getTasks());
   };
 
-  const handleDelete = (id: number): void => {
+  const handleDelete = (
+    id: number,
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    event.preventDefault(); // If needed
     taskManager.current.deleteTask(id);
   };
 
@@ -61,7 +65,10 @@ export default function Tasks() {
 
                 <div className="w-[30%] flex justify-end">
                   {" "}
-                  <button className="mr-4" onClick={handleDelete(task.id)}>
+                  <button
+                    className="mr-4"
+                    onClick={(event) => handleDelete(task.id, event)}
+                  >
                     delete
                   </button>
                 </div>
