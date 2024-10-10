@@ -4,14 +4,7 @@ interface TimerButton {
 
 export default function TimerButton({ name }: TimerButton) {
   return (
-    <button
-      style={{
-        backgroundColor: "transparent",
-        border: "none",
-        cursor: "pointer",
-      }}
-      className="capitalize text-white"
-    >
+    <button className="capitalize text-white hover:text-lg w-32 focus:bg-red-500">
       {name}
     </button>
   );

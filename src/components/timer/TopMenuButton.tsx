@@ -12,7 +12,7 @@ export default function TopMenuButton({
       <button
         onClick={handleButtonClick}
         id={buttonName}
-        className="bg-red-600"
+        className="bg-red-600 p-2 rounded-md hover:bg-red-500 focus:bg-green-300"
       >
         <p className=" text-white">{buttonName}</p>
       </button>

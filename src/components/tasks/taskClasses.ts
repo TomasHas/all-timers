@@ -59,9 +59,8 @@ export class TaskManager {
     return [...this.tasks];
   }
 
-  deleteTask(id: number) {
-    this.tasks.map((t) => console.log(t.id, id));
-
-    //matcht the id, find index and delete
+  deleteTask(index: number) {
+    this.tasks.splice(index, 1);
+    console.log(index);
   }
 }

@@ -1,6 +1,7 @@
 import "./App.css";
 import Tasks from "./components/tasks/Tasks";
-import Timer from "./components/timer/Timer";
+import TimerComponent from "./components/timer/TimerComponent";
+
 import TopMenu from "./components/timer/TopMenu";
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
 
         <div>
           {" "}
-          <Timer />
+          <TimerComponent />
           <Tasks />
         </div>
       </div>{" "}

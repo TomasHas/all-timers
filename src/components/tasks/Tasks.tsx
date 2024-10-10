@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Task, TaskManager } from "./taskClass";
+import { Task, TaskManager } from "./taskClasses";
 import TaskModal from "./TaskModal";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiPlusCircle } from "react-icons/hi";
@@ -37,6 +37,7 @@ export default function Tasks() {
   ): void => {
     event.preventDefault(); // If needed
     taskManager.current.deleteTask(id);
+    setTasks(taskManager.current.getTasks());
   };
 
   return (
@@ -60,14 +61,14 @@ export default function Tasks() {
                 <div className=" flex flex-row w-[60%] justify-between">
                   {" "}
                   <p className=" text-xl font-bold">{task.text}</p>
-                  <p className=" text-xl font-bold">{task.id}</p>
+                  <p className=" text-xl font-bold">{i + 1}</p>
                 </div>
 
                 <div className="w-[30%] flex justify-end">
                   {" "}
                   <button
                     className="mr-4"
-                    onClick={(event) => handleDelete(task.id, event)}
+                    onClick={(event) => handleDelete(i, event)}
                   >
                     delete
                   </button>

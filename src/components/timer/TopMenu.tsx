@@ -54,8 +54,8 @@ export default function TopMenu() {
           handleButtonClick={() => handleButtonClick("settings")}
         />
         <TopMenuButton
-          buttonName={"three Dots"}
-          handleButtonClick={() => handleButtonClick("three Dots")}
+          buttonName={"dots"}
+          handleButtonClick={() => handleButtonClick("dots")}
         />
       </div>
       {isOpen && (
