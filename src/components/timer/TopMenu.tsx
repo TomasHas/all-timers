@@ -2,7 +2,6 @@ import TopMenuButton from "./TopMenuButton";
 import Modal from "./Modal";
 import { useState } from "react";
 import { Theme } from "../../App";
-import { IoSettingsSharp } from "react-icons/io5";
 
 interface TopMenuProps {
   theme: Theme;
