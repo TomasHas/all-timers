@@ -10,7 +10,7 @@ export default function TimerComponent({
   selectedTheme,
   currentTheme,
 }: TimerComponentProps) {
-  const [seconds, setSeconds] = useState<number>(10);
+  const [seconds] = useState<number>(10);
   const [minutes, setMinutes] = useState<number>(currentTheme.minutes);
   // const [timerIsOn, setTimerIsOn] = useState<boolean>(false);
   // const intervalRef = useRef<number | null>(null); // To hold the interval ID

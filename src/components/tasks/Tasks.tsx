@@ -15,7 +15,7 @@ export default function Tasks({ theme }: TasksProps) {
   // const [tasks, setTasks] = useState<objec[]>(taskManager.current.getTasks());
 
   const [openModal, setOpenModal] = useState(false);
-  const [bool, setBool] = useState(false);
+  const [, setBool] = useState(false);
 
   function addTaskClick(): void {
     setOpenModal(true);
