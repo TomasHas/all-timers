@@ -1,32 +1,14 @@
-// import TopMenuButton from "./TopMenuButton";
-// import Modal from "./Modal";
-// import { useState } from "react";
-
-// export default function TopMenu() {
-//   const [activeButton, setActiveButton] = useState("none");
-//   const [isOpen, setIsOpen] = useState(false);
-//   // const handleButtonClick = (buttonName: string): void => {
-//   //   setActiveButton(buttonName);
-//   //   setIsOpen(true);
-//   // };
-
-//   return (
-//     <div className="flex flex-row items-center justify-between w-full p-4">
-//       <p className=" text-white text-2xl capitalize">pomodoro</p>{" "}
-//       <div className=" w-[50%] flex gap-3 justify-end">
-//         <TopMenuButton buttonName={"report"} />
-//         <TopMenuButton buttonName={"settings"} />
-//         <TopMenuButton buttonName={"three Dots"} />
-//       </div>
-//       <Modal name={activeButton} isOpen={isOpen} />
-//     </div>
-//   );
-// }
 import TopMenuButton from "./TopMenuButton";
 import Modal from "./Modal";
 import { useState } from "react";
+import { Theme } from "../../App";
+import { IoSettingsSharp } from "react-icons/io5";
 
-export default function TopMenu() {
+interface TopMenuProps {
+  theme: Theme;
+}
+
+export default function TopMenu({ theme }: TopMenuProps) {
   const [activeButton, setActiveButton] = useState<string>("none");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -35,6 +17,7 @@ export default function TopMenu() {
     setActiveButton(buttonName);
     setIsOpen(true); // Open the modal when a button is clicked
   };
+  console.log(theme.buttonColor);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -48,14 +31,17 @@ export default function TopMenu() {
         <TopMenuButton
           buttonName={"report"}
           handleButtonClick={() => handleButtonClick("report")}
+          color={theme.buttonColor}
         />
         <TopMenuButton
           buttonName={"settings"}
           handleButtonClick={() => handleButtonClick("settings")}
+          color={theme.buttonColor}
         />
         <TopMenuButton
           buttonName={"dots"}
           handleButtonClick={() => handleButtonClick("dots")}
+          color={theme.buttonColor}
         />
       </div>
       {isOpen && (

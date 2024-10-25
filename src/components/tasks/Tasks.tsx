@@ -4,7 +4,12 @@ import TaskModal from "./TaskModal";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiPlusCircle } from "react-icons/hi";
 import { FaCircleCheck } from "react-icons/fa6";
-export default function Tasks() {
+import { Theme } from "../../App";
+
+interface TasksProps {
+  theme: Theme;
+}
+export default function Tasks({ theme }: TasksProps) {
   const taskManager = useRef(new TaskManager());
   const [tasks, setTasks] = useState<Task[]>(taskManager.current.getTasks());
   // const [tasks, setTasks] = useState<objec[]>(taskManager.current.getTasks());
@@ -19,7 +24,7 @@ export default function Tasks() {
   const handleClose = (): void => {
     setOpenModal(false);
   };
-  console.log(bool);
+  // console.log(bool);
 
   const handleAddTask = (newTask: string): void => {
     taskManager.current.addTask(newTask); // Sends string to method. The method initiates instance.
@@ -30,6 +35,7 @@ export default function Tasks() {
     console.log(tasks);
     console.log(taskManager.current.getTasks());
   };
+  console.log(theme.buttonColor);
 
   const handleDelete = (
     id: number,
@@ -41,7 +47,7 @@ export default function Tasks() {
   };
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full mt-20">
       <div className=" flex flex-row justify-between w-full mt-5 mb-5">
         <p className=" text-white text-xl">Tasks</p>{" "}
         <div>
@@ -78,7 +84,9 @@ export default function Tasks() {
           </ul>
         )}
         {!openModal && (
-          <div className=" flex flex-col justify-center items-center w-full rounded-xl border-dashed border-2 border-red-300 h-20 bg-red-600">
+          <div
+            className={`flex flex-col justify-center items-center w-full rounded-xl border-dashed border-2 border-red-300 h-20 ${theme.componentBackgroundColor}`}
+          >
             <div className=" flex flex-row justify-center items-center w-full ">
               <button
                 onClick={addTaskClick}

@@ -1,10 +1,26 @@
-interface TimerButton {
+interface TimerButtonProps {
   name: string;
+  color: string;
+  selectTheme: (color: string) => void;
+  focus: string;
+  hover: string;
+  componentBackground: string;
 }
 
-export default function TimerButton({ name }: TimerButton) {
+export default function TimerButton({
+  name,
+  focus,
+  selectTheme,
+}: TimerButtonProps) {
+  const handleClick = (): void => {
+    selectTheme(name);
+  };
+
   return (
-    <button className="capitalize text-white hover:text-lg w-32 focus:bg-red-500">
+    <button
+      onClick={handleClick}
+      className={`capitalize text-white ${focus} p-2 rounded-xl hover:text-lg w-32 transition-colors duration-1000 ease-in`}
+    >
       {name}
     </button>
   );
