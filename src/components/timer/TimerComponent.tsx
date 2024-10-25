@@ -12,8 +12,8 @@ export default function TimerComponent({
 }: TimerComponentProps) {
   const [seconds, setSeconds] = useState<number>(10);
   const [minutes, setMinutes] = useState<number>(currentTheme.minutes);
-  const [timerIsOn, setTimerIsOn] = useState<boolean>(false);
-  const intervalRef = useRef<number | null>(null); // To hold the interval ID
+  // const [timerIsOn, setTimerIsOn] = useState<boolean>(false);
+  // const intervalRef = useRef<number | null>(null); // To hold the interval ID
   console.log(currentTheme.minutes);
   useEffect(() => {
     setMinutes(currentTheme.minutes);
