@@ -35,7 +35,7 @@ export default function Tasks({ theme }: TasksProps) {
     console.log(tasks);
     console.log(taskManager.current.getTasks());
   };
-  console.log(theme.buttonColor);
+  // console.log(theme.buttonColor);
 
   const handleDelete = (
     id: number,

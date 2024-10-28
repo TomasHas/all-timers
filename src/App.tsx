@@ -61,7 +61,7 @@ function App() {
         break;
     }
   };
-  console.log(theme);
+  // console.log(theme);
 
   return (
     <div

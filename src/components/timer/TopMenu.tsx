@@ -16,7 +16,7 @@ export default function TopMenu({ theme }: TopMenuProps) {
     setActiveButton(buttonName);
     setIsOpen(true); // Open the modal when a button is clicked
   };
-  console.log(theme.buttonColor);
+  // console.log(theme.buttonColor);
 
   const handleClose = () => {
     setIsOpen(false);
