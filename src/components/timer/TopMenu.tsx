@@ -1,13 +1,10 @@
 import TopMenuButton from "./TopMenuButton";
 import Modal from "./Modal";
 import { useState } from "react";
-import { Theme } from "../../App";
+// import { ThemeContext,useTheme } from "../../contexts/ThemeContext";
 
-interface TopMenuProps {
-  theme: Theme;
-}
-
-export default function TopMenu({ theme }: TopMenuProps) {
+export default function TopMenu() {
+  // const theme = useTheme(ThemeContext);
   const [activeButton, setActiveButton] = useState<string>("none");
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -16,7 +13,6 @@ export default function TopMenu({ theme }: TopMenuProps) {
     setActiveButton(buttonName);
     setIsOpen(true); // Open the modal when a button is clicked
   };
-  // console.log(theme.buttonColor);
 
   const handleClose = () => {
     setIsOpen(false);
@@ -30,17 +26,14 @@ export default function TopMenu({ theme }: TopMenuProps) {
         <TopMenuButton
           buttonName={"report"}
           handleButtonClick={() => handleButtonClick("report")}
-          color={theme.buttonColor}
         />
         <TopMenuButton
           buttonName={"settings"}
           handleButtonClick={() => handleButtonClick("settings")}
-          color={theme.buttonColor}
         />
         <TopMenuButton
           buttonName={"dots"}
           handleButtonClick={() => handleButtonClick("dots")}
-          color={theme.buttonColor}
         />
       </div>
       {isOpen && (

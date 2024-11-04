@@ -2,21 +2,19 @@ import { IoSettingsSharp } from "react-icons/io5";
 import { BsThreeDotsVertical } from "react-icons/bs";
 
 import { IoBarChartSharp } from "react-icons/io5";
-
+import { useTheme, ThemeContext } from "../../contexts/ThemeContext";
 interface TopMenuButtonProps {
   buttonName: string;
   handleButtonClick: () => void;
-  color: string;
 }
 
 export default function TopMenuButton({
   buttonName,
-  color,
 
   handleButtonClick,
 }: TopMenuButtonProps) {
   let content;
-
+  const theme = useTheme(ThemeContext);
   if (buttonName === "settings") {
     content = (
       <div>
@@ -24,7 +22,7 @@ export default function TopMenuButton({
         <button
           onClick={handleButtonClick}
           id={buttonName}
-          className={`flex flex-row items-center w-fit gap-2 ${color} p-2 rounded-md hover:${color} focus:bg-green-300`}
+          className={`flex flex-row items-center w-fit gap-2 ${theme.theme.colors.buttonColor} p-2 rounded-md ${theme.theme.colors.buttonHover} focus:bg-green-300`}
         >
           {" "}
           <IoSettingsSharp />
@@ -39,7 +37,7 @@ export default function TopMenuButton({
         <button
           onClick={handleButtonClick}
           id={buttonName}
-          className={`flex flex-row items-center w-fit gap-2 ${color} h-10 p-2 rounded-md hover:${color} focus:bg-green-300`}
+          className={`flex flex-row items-center w-fit gap-2 ${theme.theme.colors.buttonColor} h-10 p-2 rounded-md ${theme.theme.colors.buttonHover} focus:bg-green-300`}
         >
           {" "}
           <IoBarChartSharp />
@@ -54,7 +52,7 @@ export default function TopMenuButton({
         <button
           onClick={handleButtonClick}
           id={buttonName}
-          className={`flex flex-row justify-center items-center w-fit text-xl ${color} h-10 p-2 rounded-md hover:${color} focus:bg-green-300`}
+          className={`flex flex-row justify-center items-center w-fit text-xl ${theme.theme.colors.buttonColor} h-10 p-2 rounded-md ${theme.theme.colors.buttonHover}  focus:bg-green-300`}
         >
           {" "}
           <BsThreeDotsVertical /> <p className=" text-white"></p>

@@ -1,50 +1,33 @@
 import { useState, useEffect } from "react";
 import TimerButton from "./TimerButton";
-import { Theme } from "../../App";
+import { useTheme, ThemeContext } from "../../contexts/ThemeContext";
 
-interface TimerComponentProps {
-  selectedTheme: (theme: string) => void;
-  currentTheme: Theme;
-}
 let countdownInterval: number | undefined;
 
-export default function TimerComponent({
-  selectedTheme,
-  currentTheme,
-}: TimerComponentProps) {
-  const [seconds, setSeconds] = useState<number>(5);
-  const [minutes, setMinutes] = useState<number>(currentTheme.minutes);
-
+export default function TimerComponent() {
+  const theme = useTheme(ThemeContext);
+  const [timeLeft, setTimeLeft] = useState(theme.theme.secondsLeft);
+  const [trigger, setTrigger] = useState<boolean>(false);
   const [timerIsOn, setTimerIsOn] = useState<boolean>(false);
-  console.log(currentTheme.minutes);
-  useEffect(() => {
-    if (seconds === 0) {
-      setSeconds(5);
-      if (minutes === 0) {
-        clearInterval(countdownInterval);
-        console.log("times up");
-      } else {
-        setMinutes((m) => m - 1);
-      }
-    }
-  }, [seconds, minutes]);
 
   useEffect(() => {
-    setMinutes(currentTheme.minutes);
-  }, [currentTheme.minutes]);
+    setTimeLeft(theme.theme.secondsLeft);
+  }, [theme.theme.secondsLeft, trigger]);
+
   const countDownSeconds = () => {
     countdownInterval = setInterval(() => {
-      setSeconds((s) => s - 1);
+      setTimeLeft((s) => s - 1);
     }, 1000);
   };
 
   const handleStart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log(timerIsOn);
+    // console.log(timerIsOn);
 
     if (!timerIsOn) {
       countDownSeconds();
       setTimerIsOn(true);
+
       console.log("start");
     } else {
       console.log("timer is already on");
@@ -58,19 +41,33 @@ export default function TimerComponent({
     console.log("stop");
   };
 
-  const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
+  const handleReset = () => {
+    clearInterval(countdownInterval);
+    setTimerIsOn(false);
+    setTimeLeft(theme.theme.secondsLeft);
     console.log("reset");
   };
 
   const handleTheme = (theme: string) => {
-    selectedTheme(theme);
+    console.log(theme);
   };
+
+  const secondConverter = (seconds: number): number => {
+    return Math.floor(seconds % 60);
+  };
+  const minuteConverter = (seconds: number): number => {
+    return Math.floor(seconds / 60);
+  };
+
+  const handleTrigger = () => {
+    setTrigger((t) => !t);
+  };
+
+  // console.log(theme?.theme.colors.buttonColor);
 
   return (
     <div
-      className={` h-96 w-fit transition-colors duration-1000 ease-in ${currentTheme.componentBackgroundColor} pl-28 pr-28 flex flex-col items-center rounded-xl justify-between `}
+      className={` h-96 w-fit transition-colors duration-1000 ease-in ${theme?.theme.colors.buttonFocus} pl-28 pr-28 flex flex-col items-center rounded-xl justify-between `}
     >
       <div
         className="mt-6 flex flex-row gap-5 h-10
@@ -80,44 +77,49 @@ export default function TimerComponent({
           {" "}
           <TimerButton
             name={"pomodoro"}
-            color={currentTheme.buttonColor}
+            color={theme?.theme.colors.buttonColor}
             selectTheme={handleTheme}
-            focus={currentTheme.buttonFocus}
-            hover={currentTheme.buttonHover}
-            componentBackground={currentTheme.componentBackgroundColor}
+            hover={theme?.theme.colors.buttonHover}
+            componentBackground={theme?.theme.colors.componentBackgroundColor}
+            trigger={handleTrigger}
           />
         </div>
         <div>
           {" "}
           <TimerButton
-            name={"short break"}
-            color={currentTheme.buttonColor}
+            name={"shortBreak"}
+            color={theme?.theme.colors.buttonColor}
             selectTheme={handleTheme}
-            focus={currentTheme.buttonFocus}
-            hover={currentTheme.buttonHover}
-            componentBackground={currentTheme.componentBackgroundColor}
+            hover={theme?.theme.colors.buttonHover}
+            componentBackground={theme?.theme.colors.componentBackgroundColor}
+            trigger={handleTrigger}
           />
         </div>{" "}
         <div>
           <TimerButton
-            name={"long break"}
-            color={currentTheme.buttonColor}
+            name={"longBreak"}
+            color={theme?.theme.colors.buttonColor}
             selectTheme={handleTheme}
-            focus={currentTheme.buttonFocus}
-            hover={currentTheme.buttonHover}
-            componentBackground={currentTheme.componentBackgroundColor}
+            hover={theme?.theme.colors.buttonHover}
+            componentBackground={theme?.theme.colors.componentBackgroundColor}
+            trigger={handleTrigger}
           />
         </div>
       </div>
 
       <div className="text-9xl text-white font-dangrek w-96 flex flex-row justify-center ">
-        <div>
-          {minutes === 0 ? "00" : minutes < 10 ? `0${minutes}` : `${minutes}`}
-        </div>{" "}
-        :{" "}
-        <div className=" ">
-          {" "}
-          {seconds === 60 ? "00" : seconds < 10 ? `0${seconds}` : `${seconds}`}
+        <div className="flex flex-row justify-center w-96 bg-yellow-500">
+          <div className=" w-full flex flex-row justify-center">
+            {timeLeft / 60 < 10
+              ? `0${minuteConverter(timeLeft)}`
+              : minuteConverter(timeLeft)}
+          </div>
+          :
+          <div className=" w-full text-center">
+            {timeLeft % 60 < 10
+              ? `0${secondConverter(timeLeft)}`
+              : secondConverter(timeLeft)}
+          </div>
         </div>
       </div>
       <div className={`flex flex-row justify-between items-center h-10`}>

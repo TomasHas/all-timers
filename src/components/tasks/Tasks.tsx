@@ -4,12 +4,9 @@ import TaskModal from "./TaskModal";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiPlusCircle } from "react-icons/hi";
 import { FaCircleCheck } from "react-icons/fa6";
-import { Theme } from "../../App";
+// import { Theme } from "../../App";
 
-interface TasksProps {
-  theme: Theme;
-}
-export default function Tasks({ theme }: TasksProps) {
+export default function Tasks() {
   const taskManager = useRef(new TaskManager());
   const [tasks, setTasks] = useState<Task[]>(taskManager.current.getTasks());
   // const [tasks, setTasks] = useState<objec[]>(taskManager.current.getTasks());
@@ -85,7 +82,7 @@ export default function Tasks({ theme }: TasksProps) {
         )}
         {!openModal && (
           <div
-            className={`flex flex-col justify-center items-center w-full rounded-xl border-dashed border-2 border-red-300 h-20 ${theme.componentBackgroundColor}`}
+            className={`flex flex-col justify-center items-center w-full rounded-xl border-dashed border-2 border-red-300 h-20 `}
           >
             <div className=" flex flex-row justify-center items-center w-full ">
               <button

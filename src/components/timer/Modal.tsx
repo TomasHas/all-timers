@@ -17,14 +17,14 @@ export default function Modal({
   if (!isOpen) return null;
 
   return (
-    <div className="absolute top-40 md:left-[25%] lg:left-[35%] ">
-      <div className=" relative h-96 p-10 bg-white rounded-xl flex flex-col items-center mt-4">
+    <div className="absolute top-40 md:left-[25%] lg:left-[25%] md:w-1/2 lg:w-[50%]">
+      <div className=" relative h-full p-10 bg-white rounded-xl flex flex-col items-center mt-4">
         {name === "report" && (
           <div className="capitalize font-bold mt-4">Report </div>
         )}
         {name === "settings" && (
-          <div className="capitalize font-bold mt-4">
-            Settings Dashboard
+          <div className="capitalize font-bold mt-4 flex flex-col w-full">
+            <p className=" w-full text-center mb-10">Settings Dashboard</p>
             <TimerSettings />
           </div>
         )}
