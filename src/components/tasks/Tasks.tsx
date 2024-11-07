@@ -51,7 +51,7 @@ export default function Tasks() {
           <BsThreeDotsVertical className=" text-white text-3xl" />
         </div>
       </div>
-      <div className=" bg-red-200 h-1 w-full mb-8"></div>
+      <div className=" bg-red-200 h-1 w-full mb-8 "></div>
       <div className=" relative mb-20">
         {tasks && (
           <ul className="flex flex-col mb-10 gap-2">

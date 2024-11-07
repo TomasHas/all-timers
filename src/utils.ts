@@ -1,44 +1,51 @@
-export const red = {
-  buttonColor: "bg-red-700",
-  buttonFocus: "focus:bg-red-500",
-  buttonHover: "hover:bg-red-500",
-  componentBackgroundColor: "bg-red-600",
-  mainBackgroundColor: "bg-red-800",
+export type ColorProperties = {
+  buttonColor: string;
+  buttonFocus: string;
+  buttonHover: string;
+  componentBackgroundColor: string;
+  mainBackgroundColor: string;
+  TimerButtonActiveBg: string;
 };
 
-export const blue = {
-  buttonColor: "bg-blue-700",
-  buttonFocus: "focus:bg-blue-500",
-  buttonHover: "hover:bg-blue-500",
-  componentBackgroundColor: "bg-blue-600",
-  mainBackgroundColor: "bg-blue-800",
-};
-export const green = {
-  buttonColor: "bg-green-700",
-  buttonFocus: "focus:bg-green-500",
-  buttonHover: "hover:bg-green-500",
-  componentBackgroundColor: "bg-green-600",
-  mainBackgroundColor: "bg-green-800",
-};
-export const violet = {
-  buttonColor: "bg-violet-700",
-  buttonFocus: "focus:bg-violet-500",
-  buttonHover: "hover:bg-violet-500",
-  componentBackgroundColor: "bg-violet-600",
-  mainBackgroundColor: "bg-violet-800",
-};
-
-export const lime = {
-  buttonColor: "bg-lime-700",
-  buttonFocus: "focus:bg-lime-500",
-  buttonHover: "hover:bg-lime-500",
-  componentBackgroundColor: "bg-lime-600",
-  mainBackgroundColor: "bg-lime-800",
-};
-export const yellow = {
-  buttonColor: "bg-yellow-700",
-  buttonFocus: "focus:bg-yellow-500",
-  buttonHover: "hover:bg-yellow-500",
-  componentBackgroundColor: "bg-yellow-600",
-  mainBackgroundColor: "bg-yellow-800",
+export const colors: Record<string, ColorProperties> = {
+  red: {
+    buttonColor: `bg-red-800`,
+    buttonFocus: `focus:bg-red-500`,
+    buttonHover: `hover:bg-red-300`,
+    componentBackgroundColor: `bg-red-700`,
+    mainBackgroundColor: `bg-red-600`,
+    TimerButtonActiveBg: `bg-red-800`,
+  },
+  blue: {
+    buttonColor: `bg-blue-800`,
+    buttonFocus: `focus:bg-blue-500`,
+    buttonHover: `hover:bg-blue-300`,
+    componentBackgroundColor: `bg-blue-700`,
+    mainBackgroundColor: `bg-blue-600`,
+    TimerButtonActiveBg: `bg-blue-800`,
+  },
+  yellow: {
+    buttonColor: `bg-yellow-800`,
+    buttonFocus: `focus:bg-yellow-500`,
+    buttonHover: `hover:bg-yellow-300`,
+    componentBackgroundColor: `bg-yellow-700`,
+    mainBackgroundColor: `bg-yellow-600`,
+    TimerButtonActiveBg: `bg-yellow-800`,
+  },
+  green: {
+    buttonColor: `bg-green-800`,
+    buttonFocus: `focus:bg-green-500`,
+    buttonHover: `hover:bg-green-300`,
+    componentBackgroundColor: `bg-green-700`,
+    mainBackgroundColor: `bg-green-600`,
+    TimerButtonActiveBg: `bg-green-800`,
+  },
+  lime: {
+    buttonColor: `bg-lime-800`,
+    buttonFocus: `focus:bg-lime-500`,
+    buttonHover: `hover:bg-lime-300`,
+    componentBackgroundColor: `bg-lime-700`,
+    mainBackgroundColor: `bg-lime-600`,
+    TimerButtonActiveBg: `bg-lime-800`,
+  },
 };

@@ -1,34 +1,28 @@
-import { ThemeContext, useTheme } from "../../contexts/ThemeContext";
+import React from "react";
+
+import { useTheme } from "../../hooks";
 
 interface TimerButtonProps {
   name: string;
-  color: string | undefined;
-  selectTheme: (color: string) => void;
-  trigger: () => void;
-
-  hover: string | undefined;
-  componentBackground: string | undefined;
 }
 
-export default function TimerButton({
-  name,
+export default function TimerButton({ name }: TimerButtonProps) {
+  const theme = useTheme();
 
-  selectTheme,
-  trigger,
-}: TimerButtonProps) {
-  const theme = useTheme(ThemeContext);
+  const handleClick = (e: React.MouseEvent): void => {
+    e.preventDefault();
 
-  const handleClick = (): void => {
     theme.selectTheme(name);
-
-    selectTheme(name);
-    trigger();
   };
 
   return (
     <button
+      id={name}
+      className={`capitalize ${
+        name === theme.theme.name ? theme.theme.colors.TimerButtonActiveBg : ""
+      } text-white text-lg 
+    p-2 rounded-xl hover:text-xl w-32`}
       onClick={handleClick}
-      className={`capitalize text-white text-lg  ${theme.theme.colors.buttonFocus} ${theme.theme.colors.buttonHover} p-2 rounded-xl hover:text-xl w-32 transition-colors duration-1000 ease-in`}
     >
       {name}
     </button>

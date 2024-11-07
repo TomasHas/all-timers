@@ -1,5 +1,6 @@
-import React, { createContext, ReactNode, useContext, useState } from "react";
-import { red, blue, green } from "./../utils";
+import { createContext, ReactNode, useState } from "react";
+
+import { colors } from "./../utils";
 
 type ColorSet = {
   buttonColor: string;
@@ -7,16 +8,20 @@ type ColorSet = {
   buttonHover: string;
   componentBackgroundColor: string;
   mainBackgroundColor: string;
+  TimerButtonActiveBg: string;
 };
 
 type ThemeProviderProps = {
   children: ReactNode;
 };
 
-type ThemeContextType = {
+export type ThemeContextType = {
   theme: Theme;
   changeSeconds: (themeName: string, seconds: number) => void;
   selectTheme: (themeName: string) => void;
+  pomodoro: Theme;
+  shortBreak: Theme;
+  longBreak: Theme;
 };
 
 export type Theme = {
@@ -33,26 +38,25 @@ export default function ThemeContextProvider({ children }: ThemeProviderProps) {
   const [pomodoro, setPomodoro] = useState<Theme>({
     name: "pomodoro",
     secondsLeft: 1500,
-    colors: red,
+    colors: colors["red"],
   });
   const [shortBreak, setShortBreak] = useState<Theme>({
     name: "shortBreak",
     secondsLeft: 300,
-    colors: blue,
+    colors: colors["blue"],
   });
   const [longBreak, setLongBreak] = useState<Theme>({
     name: "longBreak",
     secondsLeft: 900,
-    colors: green,
+    colors: colors["green"],
   });
   const [theme, setTheme] = useState<Theme>(pomodoro);
-  console.log(theme.name);
+  // console.log(theme.name);
 
   const changeSeconds = (theme: string, seconds: number) => {
     switch (theme) {
       case "pomodoro":
-        console.log("changing seconds");
-        console.log(theme, seconds);
+        console.log("changing seconds", theme, seconds);
 
         setPomodoro({ ...pomodoro, secondsLeft: seconds });
         console.log(pomodoro);
@@ -87,18 +91,17 @@ export default function ThemeContextProvider({ children }: ThemeProviderProps) {
   };
 
   return (
-    <ThemeContext.Provider value={{ theme, changeSeconds, selectTheme }}>
+    <ThemeContext.Provider
+      value={{
+        theme,
+        pomodoro,
+        longBreak,
+        shortBreak,
+        changeSeconds,
+        selectTheme,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
 }
-
-export const useTheme = (
-  ThemeContext: React.Context<ThemeContextType | undefined>
-) => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeContextProvider");
-  }
-  return context;
-};

@@ -1,22 +1,24 @@
 import { useState, useEffect } from "react";
 import TimerButton from "./TimerButton";
-import { useTheme, ThemeContext } from "../../contexts/ThemeContext";
+import { useTheme } from "./../../hooks";
 
 let countdownInterval: number | undefined;
 
 export default function TimerComponent() {
-  const theme = useTheme(ThemeContext);
-  const [timeLeft, setTimeLeft] = useState(theme.theme.secondsLeft);
-  const [trigger, setTrigger] = useState<boolean>(false);
+  const theme = useTheme();
+  const [countdownTimer, setCountdownTimer] = useState(theme.theme.secondsLeft);
   const [timerIsOn, setTimerIsOn] = useState<boolean>(false);
 
-  useEffect(() => {
-    setTimeLeft(theme.theme.secondsLeft);
-  }, [theme.theme.secondsLeft, trigger]);
+  // console.log(activeTheme);
 
+  useEffect(() => {
+    //refreshes timer when seconds are modified in settings
+    setCountdownTimer(theme.theme.secondsLeft);
+  }, [theme.theme.secondsLeft]);
+  console.log(countdownTimer);
   const countDownSeconds = () => {
     countdownInterval = setInterval(() => {
-      setTimeLeft((s) => s - 1);
+      setCountdownTimer((s) => s - 1);
     }, 1000);
   };
 
@@ -41,15 +43,12 @@ export default function TimerComponent() {
     console.log("stop");
   };
 
-  const handleReset = () => {
+  const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     clearInterval(countdownInterval);
     setTimerIsOn(false);
-    setTimeLeft(theme.theme.secondsLeft);
+    setCountdownTimer(theme.theme.secondsLeft);
     console.log("reset");
-  };
-
-  const handleTheme = (theme: string) => {
-    console.log(theme);
   };
 
   const secondConverter = (seconds: number): number => {
@@ -59,15 +58,25 @@ export default function TimerComponent() {
     return Math.floor(seconds / 60);
   };
 
-  const handleTrigger = () => {
-    setTrigger((t) => !t);
-  };
-
-  // console.log(theme?.theme.colors.buttonColor);
-
+  // const handleClick = (name: string) => {
+  //   switch (name) {
+  //     case "pomodoro":
+  //       theme.selectTheme(name);
+  //       break;
+  //     case "shortBreak":
+  //       theme.selectTheme(name);
+  //       break;
+  //     case "longBreak":
+  //       theme.selectTheme(name);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // };
+  // console.log(activeTheme);
   return (
     <div
-      className={` h-96 w-fit transition-colors duration-1000 ease-in ${theme?.theme.colors.buttonFocus} pl-28 pr-28 flex flex-col items-center rounded-xl justify-between `}
+      className={` h-96 w-fit   pl-28 pr-28 flex flex-col items-center rounded-xl justify-between ${theme.theme.colors.componentBackgroundColor} `}
     >
       <div
         className="mt-6 flex flex-row gap-5 h-10
@@ -75,50 +84,31 @@ export default function TimerComponent() {
       >
         <div>
           {" "}
-          <TimerButton
-            name={"pomodoro"}
-            color={theme?.theme.colors.buttonColor}
-            selectTheme={handleTheme}
-            hover={theme?.theme.colors.buttonHover}
-            componentBackground={theme?.theme.colors.componentBackgroundColor}
-            trigger={handleTrigger}
-          />
+          <TimerButton name={"pomodoro"} />
         </div>
         <div>
           {" "}
-          <TimerButton
-            name={"shortBreak"}
-            color={theme?.theme.colors.buttonColor}
-            selectTheme={handleTheme}
-            hover={theme?.theme.colors.buttonHover}
-            componentBackground={theme?.theme.colors.componentBackgroundColor}
-            trigger={handleTrigger}
-          />
+          <TimerButton name={"shortBreak"} />
         </div>{" "}
         <div>
-          <TimerButton
-            name={"longBreak"}
-            color={theme?.theme.colors.buttonColor}
-            selectTheme={handleTheme}
-            hover={theme?.theme.colors.buttonHover}
-            componentBackground={theme?.theme.colors.componentBackgroundColor}
-            trigger={handleTrigger}
-          />
+          <TimerButton name={"longBreak"} />
         </div>
       </div>
 
-      <div className="text-9xl text-white font-dangrek w-96 flex flex-row justify-center ">
-        <div className="flex flex-row justify-center w-96 bg-yellow-500">
-          <div className=" w-full flex flex-row justify-center">
-            {timeLeft / 60 < 10
-              ? `0${minuteConverter(timeLeft)}`
-              : minuteConverter(timeLeft)}
+      <div
+        className={`text-9xl text-white font-dangrek w-96 flex flex-row justify-center  `}
+      >
+        <div className="flex flex-row justify-evenly w-96">
+          <div className=" w-24 flex flex-row justify-center">
+            {countdownTimer / 60 < 10
+              ? `0${minuteConverter(countdownTimer)}`
+              : minuteConverter(countdownTimer)}
           </div>
           :
-          <div className=" w-full text-center">
-            {timeLeft % 60 < 10
-              ? `0${secondConverter(timeLeft)}`
-              : secondConverter(timeLeft)}
+          <div className=" w-24  flex flex-row justify-center">
+            {countdownTimer % 60 < 10
+              ? `0${secondConverter(countdownTimer)}`
+              : secondConverter(countdownTimer)}
           </div>
         </div>
       </div>

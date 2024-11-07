@@ -16,7 +16,7 @@ export default function TopMenu() {
 
   const handleClose = () => {
     setIsOpen(false);
-    console.log(isOpen);
+    // console.log(isOpen);
   };
   return (
     <div className="flex flex-row items-center justify-between w-full p-4">
@@ -35,7 +35,7 @@ export default function TopMenu() {
           buttonName={"dots"}
           handleButtonClick={() => handleButtonClick("dots")}
         />
-      </div>
+      </div>{" "}
       {isOpen && (
         <Modal
           name={activeButton}
