@@ -1,13 +1,14 @@
 import { IoColorPalette } from "react-icons/io5";
 import ThemeSettingsButton from "./ThemeSettingsButton";
 import { useState } from "react";
-import ThemeSettingsModal from "./ThemeSettingsModal";
+import ThemeSettingsColorOptionsModal from "./ThemeSettingsColorOptionsModal";
 import { useTheme } from "../../hooks";
 
 export default function ThemeSettings() {
   const theme = useTheme();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isToggled, setIsToggled] = useState(false);
+  const [isToggled, setIsToggled] = useState<boolean>(false);
+  const [buttonId, setButtonId] = useState<string>("");
   const handleToggle = () => {
     setIsToggled((t) => !t);
   };
@@ -17,6 +18,10 @@ export default function ThemeSettings() {
   };
   const openModal = (): void => {
     setIsModalOpen(true);
+  };
+
+  const setThemeId = (themeName: string) => {
+    setButtonId(themeName);
   };
 
   return (
@@ -30,19 +35,26 @@ export default function ThemeSettings() {
         <div className=" flex-row flex gap-2">
           <ThemeSettingsButton
             openModal={openModal}
-            buttonTheme={theme.pomodoro.colors.buttonColor}
+            buttonTheme={theme.pomodoro.colors.mainBackgroundColor}
+            buttonId="pomodoro"
+            setThemeId={setThemeId}
           />
           <ThemeSettingsButton
             openModal={openModal}
-            buttonTheme={theme.shortBreak.colors.buttonColor}
+            buttonTheme={theme.shortBreak.colors.mainBackgroundColor}
+            buttonId="shortBreak"
+            setThemeId={setThemeId}
           />
           <ThemeSettingsButton
             openModal={openModal}
-            buttonTheme={theme.longBreak.colors.buttonColor}
+            buttonTheme={theme.longBreak.colors.mainBackgroundColor}
+            buttonId="longBreak"
+            setThemeId={setThemeId}
           />{" "}
-          <ThemeSettingsModal
+          <ThemeSettingsColorOptionsModal
             closeModal={closeModal}
             isModalOpen={isModalOpen}
+            buttonId={buttonId}
           />
         </div>
       </div>

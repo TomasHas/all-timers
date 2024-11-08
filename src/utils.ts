@@ -1,4 +1,5 @@
 export type ColorProperties = {
+  name: string;
   buttonColor: string;
   buttonFocus: string;
   buttonHover: string;
@@ -9,6 +10,7 @@ export type ColorProperties = {
 
 export const colors: Record<string, ColorProperties> = {
   red: {
+    name: "red",
     buttonColor: `bg-red-800`,
     buttonFocus: `focus:bg-red-500`,
     buttonHover: `hover:bg-red-300`,
@@ -17,6 +19,7 @@ export const colors: Record<string, ColorProperties> = {
     TimerButtonActiveBg: `bg-red-800`,
   },
   blue: {
+    name: "blue",
     buttonColor: `bg-blue-800`,
     buttonFocus: `focus:bg-blue-500`,
     buttonHover: `hover:bg-blue-300`,
@@ -25,6 +28,7 @@ export const colors: Record<string, ColorProperties> = {
     TimerButtonActiveBg: `bg-blue-800`,
   },
   yellow: {
+    name: "yellow",
     buttonColor: `bg-yellow-800`,
     buttonFocus: `focus:bg-yellow-500`,
     buttonHover: `hover:bg-yellow-300`,
@@ -33,6 +37,7 @@ export const colors: Record<string, ColorProperties> = {
     TimerButtonActiveBg: `bg-yellow-800`,
   },
   green: {
+    name: "green",
     buttonColor: `bg-green-800`,
     buttonFocus: `focus:bg-green-500`,
     buttonHover: `hover:bg-green-300`,
@@ -41,6 +46,7 @@ export const colors: Record<string, ColorProperties> = {
     TimerButtonActiveBg: `bg-green-800`,
   },
   lime: {
+    name: "lime",
     buttonColor: `bg-lime-800`,
     buttonFocus: `focus:bg-lime-500`,
     buttonHover: `hover:bg-lime-300`,

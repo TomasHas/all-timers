@@ -6,7 +6,9 @@ let countdownInterval: number | undefined;
 
 export default function TimerComponent() {
   const theme = useTheme();
-  const [countdownTimer, setCountdownTimer] = useState(theme.theme.secondsLeft);
+  const [countdownTimer, setCountdownTimer] = useState(
+    theme.pomodoro.secondsLeft
+  );
   const [timerIsOn, setTimerIsOn] = useState<boolean>(false);
 
   // console.log(activeTheme);
@@ -15,7 +17,11 @@ export default function TimerComponent() {
     //refreshes timer when seconds are modified in settings
     setCountdownTimer(theme.theme.secondsLeft);
   }, [theme.theme.secondsLeft]);
-  console.log(countdownTimer);
+
+  useEffect(() => {
+    setCountdownTimer(theme.theme.secondsLeft);
+  }, [theme.pomodoro.secondsLeft, theme.theme.secondsLeft]);
+  // console.log(countdownTimer);
   const countDownSeconds = () => {
     countdownInterval = setInterval(() => {
       setCountdownTimer((s) => s - 1);

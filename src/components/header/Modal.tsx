@@ -13,9 +13,9 @@ export default function Modal({ name, isOpen, handleClose }: ModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center  bg-opacity-90  z-10">
+    <div className="absolute inset-0 flex items-center justify-center  bg-opacity-90  z-10 ">
       {/* <div className="relative w-[500px] bg-white p-7 rounded-lg shadow-lg  scrollbar-hide"> */}
-      <div className=" relative bg-white w-full max-w-lg h-full max-h-[90vh] p-6  overflow-y-auto scrollbar-hide rounded-lg">
+      <div className=" relative bg-white w-full max-w-lg h-full max-h-[90vh] p-10  overflow-y-auto scrollbar-hide rounded-lg">
         {name === "report" && (
           <div className="capitalize font-bold mt-4">Report </div>
         )}

@@ -40,7 +40,7 @@ export default function ThemeSettings() {
             max="100"
             value="50"
             onChange={handleChange}
-            className="w-1/2 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-white focus:outline-none"
+            className="w-1/2 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-white focus:outline-none "
           />
         </div>
       </div>
