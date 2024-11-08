@@ -6,22 +6,31 @@ let countdownInterval: number | undefined;
 
 export default function TimerComponent() {
   const theme = useTheme();
-  const [countdownTimer, setCountdownTimer] = useState(
-    theme.pomodoro.secondsLeft
-  );
+  const [countdownTimer, setCountdownTimer] = useState(theme.theme.secondsLeft);
+
   const [timerIsOn, setTimerIsOn] = useState<boolean>(false);
 
-  // console.log(activeTheme);
+  const [autoBreakIsOn] = useState(theme.autoBreakStatus);
 
   useEffect(() => {
     //refreshes timer when seconds are modified in settings
-    setCountdownTimer(theme.theme.secondsLeft);
-  }, [theme.theme.secondsLeft]);
+    if (countdownTimer === 0) {
+      console.log("zero");
+      clearInterval(countdownInterval);
+      theme.selectTheme("shortBreak");
+
+      if (autoBreakIsOn) {
+        countDownSeconds();
+      }
+    }
+  }, [autoBreakIsOn, countdownTimer, theme]);
 
   useEffect(() => {
     setCountdownTimer(theme.theme.secondsLeft);
+    console.log(theme.theme.secondsLeft);
   }, [theme.pomodoro.secondsLeft, theme.theme.secondsLeft]);
   // console.log(countdownTimer);
+
   const countDownSeconds = () => {
     countdownInterval = setInterval(() => {
       setCountdownTimer((s) => s - 1);

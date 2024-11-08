@@ -4,9 +4,10 @@ import TaskModal from "./TaskModal";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiPlusCircle } from "react-icons/hi";
 import { FaCircleCheck } from "react-icons/fa6";
-// import { Theme } from "../../App";
+import { useTheme } from "../../hooks";
 
 export default function Tasks() {
+  const theme = useTheme();
   const taskManager = useRef(new TaskManager());
   const [tasks, setTasks] = useState<Task[]>(taskManager.current.getTasks());
   // const [tasks, setTasks] = useState<objec[]>(taskManager.current.getTasks());
@@ -21,7 +22,6 @@ export default function Tasks() {
   const handleClose = (): void => {
     setOpenModal(false);
   };
-  // console.log(bool);
 
   const handleAddTask = (newTask: string): void => {
     taskManager.current.addTask(newTask); // Sends string to method. The method initiates instance.
@@ -51,10 +51,12 @@ export default function Tasks() {
           <BsThreeDotsVertical className=" text-white text-3xl" />
         </div>
       </div>
-      <div className=" bg-red-200 h-1 w-full mb-8 "></div>
-      <div className=" relative mb-20">
+      <div
+        className={`h-1 w-full mb-8 ${theme.theme.colors.taskSeparatorBg}`}
+      ></div>
+      <div className=" relative mb-20 ">
         {tasks && (
-          <ul className="flex flex-col mb-10 gap-2">
+          <ul className="flex flex-col mb-10 gap-2 ">
             {tasks.map((task, i) => (
               <li
                 key={i}
@@ -82,14 +84,14 @@ export default function Tasks() {
         )}
         {!openModal && (
           <div
-            className={`flex flex-col justify-center items-center w-full rounded-xl border-dashed border-2 border-red-300 h-20 `}
+            className={`flex flex-col justify-center items-center w-full rounded-xl ${theme.theme.colors.border} border-dashed border-4  h-20 ${theme.theme.colors.componentBackgroundColor} `}
           >
             <div className=" flex flex-row justify-center items-center w-full ">
               <button
                 onClick={addTaskClick}
-                className=" flex flex-row  bg-transparent border-transparent text-red-200 text-xl gap-2"
+                className=" flex flex-row  bg-transparent border-transparent text-white text-xl gap-2"
               >
-                <HiPlusCircle className=" text-3xl text-red-200" />
+                <HiPlusCircle className=" text-3xl text-white" />
                 <p className="capitalize">add task</p>
               </button>
             </div>

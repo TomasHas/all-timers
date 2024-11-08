@@ -1,15 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 
-import { colors } from "./../utils";
-
-type ColorSet = {
-  buttonColor: string;
-  buttonFocus: string;
-  buttonHover: string;
-  componentBackgroundColor: string;
-  mainBackgroundColor: string;
-  TimerButtonActiveBg: string;
-};
+import { colors, ColorProperties } from "./../utils";
 
 type ThemeProviderProps = {
   children: ReactNode;
@@ -23,11 +14,13 @@ export type ThemeContextType = {
   pomodoro: Theme;
   shortBreak: Theme;
   longBreak: Theme;
+  autoBreakStatus: boolean;
+  autoBreakToggle: () => void;
 };
 
 export type Theme = {
   name: string;
-  colors: ColorSet;
+  colors: ColorProperties;
   secondsLeft: number;
   colorId: string;
 };
@@ -56,36 +49,24 @@ export default function ThemeContextProvider({ children }: ThemeProviderProps) {
     colorId: "green",
   });
   const [theme, setTheme] = useState<Theme>(pomodoro);
-
-  // useEffect(() => {
-  //   console.log("Pomodoro colors updated:", pomodoro.colors);
-  // }, [pomodoro.colors]);
-
-  // useEffect(() => {
-  //   console.log("ShortBreak colors updated:", shortBreak.colors);
-  // }, [shortBreak.colors]);
-
-  // useEffect(() => {
-  //   console.log("LongBreak colors updated:", longBreak.colors);
-  // }, [longBreak.colors]);
+  const [autoBreakStatus, setAutoBreakStatus] = useState(false);
+  console.log(autoBreakStatus);
 
   useEffect(() => {
-    console.log("Pomodoro seconds updated:", pomodoro.secondsLeft);
-  }, [pomodoro.secondsLeft]);
+    if (theme.name === "pomodoro") setTheme(pomodoro);
+    else if (theme.name === "shortBreak") setTheme(shortBreak);
+    else if (theme.name === "longBreak") setTheme(longBreak);
+  }, [pomodoro, shortBreak, longBreak, theme.name]);
 
-  useEffect(() => {
-    console.log("ShortBreak seconds updated:", shortBreak.secondsLeft);
-  }, [shortBreak.secondsLeft]);
-
-  useEffect(() => {
-    console.log("LongBreak seconds updated:", longBreak.secondsLeft);
-  }, [longBreak.secondsLeft]);
+  const autoBreakToggle = (): void => {
+    setAutoBreakStatus((s) => !s);
+  };
 
   const changeSeconds = (theme: string, seconds: number) => {
+    console.log("contexChangeSeconds", theme, seconds);
+
     switch (theme) {
       case "pomodoro":
-        console.log("changing seconds", theme, seconds);
-
         setPomodoro({ ...pomodoro, secondsLeft: seconds });
         // console.log(pomodoro);
         break;
@@ -124,6 +105,7 @@ export default function ThemeContextProvider({ children }: ThemeProviderProps) {
     switch (themeName) {
       case "pomodoro":
         setPomodoro({ ...pomodoro, colors: colors[themeColor] });
+
         break;
       case "shortBreak":
         setShortBreak({ ...shortBreak, colors: colors[themeColor] });
@@ -139,6 +121,7 @@ export default function ThemeContextProvider({ children }: ThemeProviderProps) {
     }
   };
 
+  console.log(theme.secondsLeft);
   return (
     <ThemeContext.Provider
       value={{
@@ -149,6 +132,8 @@ export default function ThemeContextProvider({ children }: ThemeProviderProps) {
         changeSeconds,
         selectTheme,
         changeThemeColor,
+        autoBreakToggle,
+        autoBreakStatus,
       }}
     >
       {children}

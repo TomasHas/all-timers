@@ -9,6 +9,7 @@ export default function ThemeSettings() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isToggled, setIsToggled] = useState<boolean>(false);
   const [buttonId, setButtonId] = useState<string>("");
+
   const handleToggle = () => {
     setIsToggled((t) => !t);
   };

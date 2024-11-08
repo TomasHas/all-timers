@@ -1,11 +1,14 @@
 // import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaRegClock } from "react-icons/fa6";
 import { useTheme } from "../../hooks";
 
 export default function TimerSettings() {
   const theme = useTheme();
-  const [isToggled, setIsToggled] = useState(false);
+  const [isToggledAutoBreaks, setIsToggledAutoBreaks] = useState(
+    theme.autoBreakStatus
+  );
+  const [isToggledAutoPomodoro, setIsToggledAutoPomodoro] = useState(false);
 
   const [pomodoroSeconds, setPomodoroSeconds] = useState(
     theme.pomodoro.secondsLeft / 60
@@ -18,28 +21,35 @@ export default function TimerSettings() {
     theme.longBreak.secondsLeft / 60
   );
 
+  useEffect(() => {
+    setIsToggledAutoBreaks(theme.autoBreakStatus);
+  }, [theme.autoBreakStatus]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const seconds = Number(value);
     console.log("seconds", value);
 
     if (name === "pomodoro") {
-      setPomodoroSeconds(seconds);
-      theme.changeSeconds(name, pomodoroSeconds * 60);
+      setPomodoroSeconds(() => seconds);
+      theme.changeSeconds(name, seconds * 60);
       console.log(theme.theme.secondsLeft);
     } else if (name === "shortBreak") {
       setShortBreakSeconds(seconds);
-      theme.changeSeconds(name, shortBreakSeconds * 60);
+      theme.changeSeconds(name, seconds * 60);
     } else if (name === "longBreak") {
       setLongBreakSeconds(seconds);
-      theme.changeSeconds(name, longBreakSeconds * 60);
+      theme.changeSeconds(name, seconds * 60);
     }
 
-    console.log(name, seconds);
+    // console.log(name, seconds);
   };
 
-  const handleToggle = () => {
-    setIsToggled((t) => !t);
+  const handleToggleAutoBreaks = () => {
+    theme.autoBreakToggle();
+  };
+  const handleToggleAutoPomodoro = () => {
+    setIsToggledAutoPomodoro((t) => !t);
   };
 
   return (
@@ -86,14 +96,14 @@ export default function TimerSettings() {
           <div className=" flex flex-row justify-between items-center">
             <p>auto start breaks</p>
             <button
-              onClick={handleToggle}
+              onClick={handleToggleAutoBreaks}
               className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer transition duration-300 ${
-                isToggled ? "bg-green-500" : "bg-gray-300"
+                isToggledAutoBreaks ? "bg-green-500" : "bg-gray-300"
               }`}
             >
               <div
                 className={`bg-white w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 ${
-                  isToggled ? "translate-x-8" : "translate-x-0"
+                  isToggledAutoBreaks ? "translate-x-8" : "translate-x-0"
                 }`}
               />
             </button>
@@ -101,14 +111,14 @@ export default function TimerSettings() {
           <div className=" flex flex-row justify-between items-center ">
             <p>auto start pomodoros</p>
             <button
-              onClick={handleToggle}
+              onClick={handleToggleAutoPomodoro}
               className={`w-16 h-8 flex items-center rounded-full p-1 cursor-pointer transition duration-300 ${
-                isToggled ? "bg-green-500" : "bg-gray-300"
+                isToggledAutoPomodoro ? "bg-green-500" : "bg-gray-300"
               }`}
             >
               <div
                 className={`bg-white w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 ${
-                  isToggled ? "translate-x-8" : "translate-x-0"
+                  isToggledAutoPomodoro ? "translate-x-8" : "translate-x-0"
                 }`}
               />
             </button>

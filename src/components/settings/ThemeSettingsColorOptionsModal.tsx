@@ -17,6 +17,7 @@ export default function ThemeSettingsColorOptionsModal({
   // console.log(buttonId);
 
   if (!isModalOpen) return null;
+
   return (
     <div
       className=" flex flex-col h-fit

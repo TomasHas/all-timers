@@ -11,7 +11,6 @@ export default function TimerButton({ name }: TimerButtonProps) {
 
   const handleClick = (e: React.MouseEvent): void => {
     e.preventDefault();
-
     theme.selectTheme(name);
   };
 
