@@ -1,8 +1,6 @@
 import { colors } from "../../utils";
 import ThemeSettingsModalColorOptionsButton from "./ThemeSettingsModalColorOptionsButton";
 import { CgClose } from "react-icons/cg";
-import { usePomodoro } from "../../hooks";
-import { useState } from "react";
 
 interface ThemeSettingsColorOptionsModalProps {
   isModalOpen: boolean;
@@ -15,8 +13,6 @@ export default function ThemeSettingsColorOptionsModal({
   closeModal,
   buttonId,
 }: ThemeSettingsColorOptionsModalProps) {
-  const pomodoro = usePomodoro();
-
   if (!isModalOpen) return null;
 
   return (
