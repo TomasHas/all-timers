@@ -1,37 +1,92 @@
 import { useState, useEffect } from "react";
 import TimerButton from "./TimerButton";
-import { useTheme } from "./../../hooks";
+import { usePomodoro } from "./../../hooks";
+import click from "./../../assets/buttonClick.mp3";
 
 let countdownInterval: number | undefined;
+const buttonClick = new Audio(click);
 
 export default function TimerComponent() {
-  const theme = useTheme();
-  const [countdownTimer, setCountdownTimer] = useState(theme.theme.secondsLeft);
+  const pomodoro = usePomodoro();
+  const [countdownTimer, setCountdownTimer] = useState<number>(
+    pomodoro.mode.secondsLeft
+  );
 
-  const [timerIsOn, setTimerIsOn] = useState<boolean>(false);
-
-  const [autoBreakIsOn] = useState(theme.autoBreakStatus);
-
+  //& updates the timer seconds when the settings are changed by the user
   useEffect(() => {
-    //refreshes timer when seconds are modified in settings
-    if (countdownTimer === 0) {
-      console.log("zero");
-      clearInterval(countdownInterval);
-      theme.selectTheme("shortBreak");
-
-      if (autoBreakIsOn) {
-        countDownSeconds();
-      }
-    }
-  }, [autoBreakIsOn, countdownTimer, theme]);
-
-  useEffect(() => {
-    setCountdownTimer(theme.theme.secondsLeft);
-    console.log(theme.theme.secondsLeft);
-  }, [theme.pomodoro.secondsLeft, theme.theme.secondsLeft]);
+    setCountdownTimer(pomodoro.mode.secondsLeft);
+  }, [pomodoro.pomodoro.secondsLeft, pomodoro.mode.secondsLeft]);
   // console.log(countdownTimer);
 
-  const countDownSeconds = () => {
+  //& Sets the next timer
+  useEffect(() => {
+    if (pomodoro.mode.name === "pomodoro") {
+      if (countdownTimer === 0) {
+        // console.log("zero");
+        clearInterval(countdownInterval);
+        pomodoro.toggleMode("pomodoro");
+        setCountdownTimer(pomodoro.mode.secondsLeft);
+        pomodoro.changeTimerStatus(false);
+      }
+    }
+    if (pomodoro.mode.name === "shortBreak") {
+      if (countdownTimer === 0) {
+        // console.log("zero");
+        clearInterval(countdownInterval);
+        pomodoro.toggleMode("shortBreak");
+        setCountdownTimer(pomodoro.mode.secondsLeft);
+        pomodoro.changeTimerStatus(false);
+      }
+    }
+    if (pomodoro.mode.name === "longBreak") {
+      if (countdownTimer === 0) {
+        // console.log("zero");
+        clearInterval(countdownInterval);
+        pomodoro.toggleMode("longBreak");
+        setCountdownTimer(pomodoro.mode.secondsLeft);
+        pomodoro.changeTimerStatus(false);
+      }
+    }
+  }, [countdownTimer, pomodoro]);
+
+  //& AUTO BREAK START starts the next timer automatically
+  useEffect(() => {
+    // console.log("countdownTimer", countdownTimer);
+    // console.log("pomodoro.autoBreakStatus", pomodoro.autoBreakStatus);
+
+    if (pomodoro.mode.name === "shortBreak") {
+      if (pomodoro.autoBreakStatus) {
+        startCountDown();
+        pomodoro.changeTimerStatus(true);
+
+        // console.log("start");
+      }
+    }
+  }, [
+    pomodoro,
+    pomodoro.autoBreakStatus,
+    pomodoro.mode.name,
+    pomodoro.timerIsOn,
+  ]);
+
+  //& AUTO START POMODOROS after shortBreak
+  useEffect(() => {
+    // console.log("auto start pomodoro", pomodoro.mode.name);
+    // console.log("pomodoro.autoPomodoroStatus", pomodoro.autoPomodoroStatus);
+    // console.log("pomodoro.turn", pomodoro.turn);
+
+    if (pomodoro.mode.name === "pomodoro" && pomodoro.turn !== 0) {
+      if (pomodoro.autoPomodoroStatus) {
+        startCountDown();
+        pomodoro.changeTimerStatus(true);
+
+        // console.log("start");
+      }
+    }
+    // get the prev value of pomodoro so that pomodoro does not start on first loading.
+  }, [pomodoro.autoPomodoroStatus, pomodoro]);
+
+  const startCountDown = () => {
     countdownInterval = setInterval(() => {
       setCountdownTimer((s) => s - 1);
     }, 1000);
@@ -40,31 +95,34 @@ export default function TimerComponent() {
   const handleStart = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     // console.log(timerIsOn);
+    buttonClick.play();
+    if (!pomodoro.timerIsOn) {
+      startCountDown();
+      pomodoro.changeTimerStatus(true);
 
-    if (!timerIsOn) {
-      countDownSeconds();
-      setTimerIsOn(true);
-
-      console.log("start");
+      // console.log("start");
     } else {
-      console.log("timer is already on");
+      // console.log("timer is already on");
     }
   };
 
   const handleStop = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    buttonClick.play();
     clearInterval(countdownInterval);
-    setTimerIsOn(false);
-    console.log("stop");
+    pomodoro.changeTimerStatus(false);
+    // console.log("stop");
   };
 
   const handleReset = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    buttonClick.play();
     clearInterval(countdownInterval);
-    setTimerIsOn(false);
-    setCountdownTimer(theme.theme.secondsLeft);
-    console.log("reset");
+    pomodoro.changeTimerStatus(false);
+    setCountdownTimer(pomodoro.mode.secondsLeft);
+    // console.log("reset");
   };
+  // console.log(pomodoro.mode.colors.componentBackgroundColor);
 
   const secondConverter = (seconds: number): number => {
     return Math.floor(seconds % 60);
@@ -73,25 +131,9 @@ export default function TimerComponent() {
     return Math.floor(seconds / 60);
   };
 
-  // const handleClick = (name: string) => {
-  //   switch (name) {
-  //     case "pomodoro":
-  //       theme.selectTheme(name);
-  //       break;
-  //     case "shortBreak":
-  //       theme.selectTheme(name);
-  //       break;
-  //     case "longBreak":
-  //       theme.selectTheme(name);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // };
-  // console.log(activeTheme);
   return (
     <div
-      className={` h-96 w-fit   pl-28 pr-28 flex flex-col items-center rounded-xl justify-between ${theme.theme.colors.componentBackgroundColor} `}
+      className={` h-96 w-fit   pl-28 pr-28 flex flex-col items-center rounded-xl justify-between ${pomodoro.mode.colors.componentBackgroundColor} `}
     >
       <div
         className="mt-6 flex flex-row gap-5 h-10
@@ -99,14 +141,23 @@ export default function TimerComponent() {
       >
         <div>
           {" "}
-          <TimerButton name={"pomodoro"} />
+          <TimerButton
+            name={"pomodoro"}
+            stopTimer={() => clearInterval(countdownInterval)}
+          />
         </div>
         <div>
           {" "}
-          <TimerButton name={"shortBreak"} />
+          <TimerButton
+            name={"shortBreak"}
+            stopTimer={() => clearInterval(countdownInterval)}
+          />
         </div>{" "}
         <div>
-          <TimerButton name={"longBreak"} />
+          <TimerButton
+            name={"longBreak"}
+            stopTimer={() => clearInterval(countdownInterval)}
+          />
         </div>
       </div>
 
@@ -128,7 +179,7 @@ export default function TimerComponent() {
         </div>
       </div>
       <div className={`flex flex-row justify-between items-center h-10`}>
-        {!timerIsOn ? (
+        {!pomodoro.timerIsOn ? (
           <button
             className=" w-44 text-white text-xl capitalize"
             onClick={handleStart}

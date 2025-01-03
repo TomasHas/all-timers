@@ -1,6 +1,9 @@
 import { colors } from "../../utils";
 import ThemeSettingsModalColorOptionsButton from "./ThemeSettingsModalColorOptionsButton";
 import { CgClose } from "react-icons/cg";
+import { usePomodoro } from "../../hooks";
+import { useState } from "react";
+
 interface ThemeSettingsColorOptionsModalProps {
   isModalOpen: boolean;
   closeModal: () => void;
@@ -12,9 +15,7 @@ export default function ThemeSettingsColorOptionsModal({
   closeModal,
   buttonId,
 }: ThemeSettingsColorOptionsModalProps) {
-  // console.log(colors.red.buttonColor);
-  // console.log(colors.name);
-  // console.log(buttonId);
+  const pomodoro = usePomodoro();
 
   if (!isModalOpen) return null;
 
@@ -31,34 +32,50 @@ export default function ThemeSettingsColorOptionsModal({
         </button>
       </div>
       <div
-        className="flex flex-row gap-2 p-2
+        className="flex flex-row gap-2 p-2 items-center
       "
       >
-        <ThemeSettingsModalColorOptionsButton
-          buttonTheme={colors.red.mainBackgroundColor}
-          themeColor={colors.red.name}
-          buttonId={buttonId}
-        />
-        <ThemeSettingsModalColorOptionsButton
-          buttonTheme={colors.blue.mainBackgroundColor}
-          themeColor={colors.blue.name}
-          buttonId={buttonId}
-        />
-        <ThemeSettingsModalColorOptionsButton
-          buttonTheme={colors.yellow.mainBackgroundColor}
-          themeColor={colors.yellow.name}
-          buttonId={buttonId}
-        />
-        <ThemeSettingsModalColorOptionsButton
-          buttonTheme={colors.lime.mainBackgroundColor}
-          themeColor={colors.lime.name}
-          buttonId={buttonId}
-        />
-        <ThemeSettingsModalColorOptionsButton
-          buttonTheme={colors.green.mainBackgroundColor}
-          themeColor={colors.green.name} //red
-          buttonId={buttonId} //pomodoro
-        />
+        <div className="">
+          <ThemeSettingsModalColorOptionsButton
+            buttonBg={colors.red.mainBackgroundColor}
+            buttonColor={colors.red.name}
+            buttonId={buttonId}
+            // activeColor={borderFocus}
+          />
+        </div>{" "}
+        <div>
+          <ThemeSettingsModalColorOptionsButton
+            buttonBg={colors.blue.mainBackgroundColor}
+            buttonColor={colors.blue.name}
+            buttonId={buttonId}
+            // activeColor={borderFocus}
+          />{" "}
+        </div>
+        <div>
+          <ThemeSettingsModalColorOptionsButton
+            buttonBg={colors.yellow.mainBackgroundColor}
+            buttonColor={colors.yellow.name}
+            buttonId={buttonId}
+            // activeColor={borderFocus}
+          />
+        </div>{" "}
+        <div>
+          <ThemeSettingsModalColorOptionsButton
+            buttonBg={colors.lime.mainBackgroundColor}
+            buttonColor={colors.lime.name}
+            buttonId={buttonId}
+            // activeColor={borderFocus}
+          />{" "}
+        </div>{" "}
+        <div>
+          <ThemeSettingsModalColorOptionsButton
+            buttonBg={colors.green.mainBackgroundColor}
+            buttonColor={colors.green.name} //red
+            buttonId={buttonId}
+            // activeColor={borderFocus}
+            //pomodoro
+          />
+        </div>
       </div>
     </div>
   );

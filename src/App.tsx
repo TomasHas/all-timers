@@ -3,15 +3,15 @@ import TopMenu from "./components/header/TopMenu";
 import Tasks from "./components/tasks/Tasks";
 import TimerComponent from "./components/timer/TimerComponent";
 
-import { useTheme } from "./hooks";
+import { usePomodoro } from "./hooks";
 function App() {
-  const theme = useTheme();
+  const pomodoro = usePomodoro();
 
   return (
     <div>
       {" "}
       <div
-        className={` transition-colors duration-500 ease-out ${theme?.theme.colors.mainBackgroundColor} w-screen  flex flex-col justify-center items-center`}
+        className={` transition-colors duration-500 ease-out ${pomodoro?.mode.colors.mainBackgroundColor} w-screen  flex flex-col justify-center items-center`}
       >
         <div className="flex flex-col items-center  w-screen mt-20 md:w-screen lg:w-[60%]">
           <TopMenu />

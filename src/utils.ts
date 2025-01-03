@@ -1,14 +1,4 @@
-export type ColorProperties = {
-  name: string;
-  buttonColor: string;
-  buttonFocus: string;
-  buttonHover: string;
-  componentBackgroundColor: string;
-  mainBackgroundColor: string;
-  TimerButtonActiveBg: string;
-  border: string;
-  taskSeparatorBg: string;
-};
+import { ColorProperties } from "./types/pomodoroTypes";
 
 export const colors: Record<string, ColorProperties> = {
   red: {
@@ -19,8 +9,8 @@ export const colors: Record<string, ColorProperties> = {
     componentBackgroundColor: `bg-red-700`,
     mainBackgroundColor: `bg-red-600`,
     TimerButtonActiveBg: `bg-red-800`,
-    border: `border-red-300`,
-    taskSeparatorBg: `bg-red-300`,
+    border: "border-red-400",
+    taskSeparatorBg: `bg-red-700`,
   },
   blue: {
     name: "blue",
@@ -30,8 +20,8 @@ export const colors: Record<string, ColorProperties> = {
     componentBackgroundColor: `bg-blue-700`,
     mainBackgroundColor: `bg-blue-600`,
     TimerButtonActiveBg: `bg-blue-800`,
-    border: `border-blue-300`,
-    taskSeparatorBg: `bg-blue-300`,
+    border: `border-blue-400`,
+    taskSeparatorBg: `bg-blue-400`,
   },
   yellow: {
     name: "yellow",
@@ -41,8 +31,8 @@ export const colors: Record<string, ColorProperties> = {
     componentBackgroundColor: `bg-yellow-700`,
     mainBackgroundColor: `bg-yellow-600`,
     TimerButtonActiveBg: `bg-yellow-800`,
-    border: `border-yellow-300`,
-    taskSeparatorBg: `bg-yellow-300`,
+    border: `border-yellow-400`,
+    taskSeparatorBg: `bg-yellow-400`,
   },
   green: {
     name: "green",
@@ -52,8 +42,8 @@ export const colors: Record<string, ColorProperties> = {
     componentBackgroundColor: `bg-green-700`,
     mainBackgroundColor: `bg-green-600`,
     TimerButtonActiveBg: `bg-green-800`,
-    border: `border-green-300`,
-    taskSeparatorBg: `bg-green-300`,
+    border: `border-green-400`,
+    taskSeparatorBg: `bg-green-400`,
   },
   lime: {
     name: "lime",
@@ -63,7 +53,27 @@ export const colors: Record<string, ColorProperties> = {
     componentBackgroundColor: `bg-lime-700`,
     mainBackgroundColor: `bg-lime-600`,
     TimerButtonActiveBg: `bg-lime-800`,
-    border: `border-lime-300`,
-    taskSeparatorBg: `bg-lime-300`,
+    border: `border-lime-400`,
+    taskSeparatorBg: `bg-lime-400`,
   },
+};
+
+export const pomodoroDefault = {
+  name: "pomodoro",
+  secondsLeft: 1500,
+  colors: colors["red"],
+  colorId: "red",
+};
+export const shortBreakDefault = {
+  name: "shortBreak",
+  secondsLeft: 300,
+  colors: colors["blue"],
+  colorId: "blue",
+};
+
+export const longBreakDefault = {
+  name: "longBreak",
+  secondsLeft: 900,
+  colors: colors["green"],
+  colorId: "green",
 };

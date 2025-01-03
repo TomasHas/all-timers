@@ -2,10 +2,10 @@ import { IoColorPalette } from "react-icons/io5";
 import ThemeSettingsButton from "./ThemeSettingsButton";
 import { useState } from "react";
 import ThemeSettingsColorOptionsModal from "./ThemeSettingsColorOptionsModal";
-import { useTheme } from "../../hooks";
+import { usePomodoro } from "../../hooks";
 
 export default function ThemeSettings() {
-  const theme = useTheme();
+  const pomodoro = usePomodoro();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isToggled, setIsToggled] = useState<boolean>(false);
   const [buttonId, setButtonId] = useState<string>("");
@@ -36,19 +36,19 @@ export default function ThemeSettings() {
         <div className=" flex-row flex gap-2">
           <ThemeSettingsButton
             openModal={openModal}
-            buttonTheme={theme.pomodoro.colors.mainBackgroundColor}
+            buttonTheme={pomodoro.pomodoro.colors.mainBackgroundColor}
             buttonId="pomodoro"
             setThemeId={setThemeId}
           />
           <ThemeSettingsButton
             openModal={openModal}
-            buttonTheme={theme.shortBreak.colors.mainBackgroundColor}
+            buttonTheme={pomodoro.shortBreak.colors.mainBackgroundColor}
             buttonId="shortBreak"
             setThemeId={setThemeId}
           />
           <ThemeSettingsButton
             openModal={openModal}
-            buttonTheme={theme.longBreak.colors.mainBackgroundColor}
+            buttonTheme={pomodoro.longBreak.colors.mainBackgroundColor}
             buttonId="longBreak"
             setThemeId={setThemeId}
           />{" "}

@@ -1,57 +1,81 @@
 // import React from "react";
 import { useEffect, useState } from "react";
 import { FaRegClock } from "react-icons/fa6";
-import { useTheme } from "../../hooks";
+import { usePomodoro } from "../../hooks";
 
 export default function TimerSettings() {
-  const theme = useTheme();
+  const pomodoro = usePomodoro();
   const [isToggledAutoBreaks, setIsToggledAutoBreaks] = useState(
-    theme.autoBreakStatus
+    pomodoro.autoBreakStatus
   );
-  const [isToggledAutoPomodoro, setIsToggledAutoPomodoro] = useState(false);
-
-  const [pomodoroSeconds, setPomodoroSeconds] = useState(
-    theme.pomodoro.secondsLeft / 60
-  );
-  const [shortBreakSeconds, setShortBreakSeconds] = useState(
-    theme.shortBreak.secondsLeft / 60
+  const [isToggledAutoPomodoro, setIsToggledAutoPomodoro] = useState(
+    pomodoro.autoPomodoroStatus
   );
 
-  const [longBreakSeconds, setLongBreakSeconds] = useState(
-    theme.longBreak.secondsLeft / 60
+  const [pomodoroSeconds, setPomodoroSeconds] = useState<number>(
+    pomodoro.pomodoro.secondsLeft / 60
+  );
+  const [shortBreakSeconds, setShortBreakSeconds] = useState<number>(
+    pomodoro.shortBreak.secondsLeft / 60
+  );
+
+  const [longBreakSeconds, setLongBreakSeconds] = useState<number>(
+    pomodoro.longBreak.secondsLeft / 60
+  );
+
+  const [intervalNumber, setIntervalNumber] = useState<number>(
+    pomodoro.longBreakInterval
   );
 
   useEffect(() => {
-    setIsToggledAutoBreaks(theme.autoBreakStatus);
-  }, [theme.autoBreakStatus]);
+    setIsToggledAutoBreaks(pomodoro.autoBreakStatus);
+  }, [pomodoro.autoBreakStatus]);
+
+  useEffect(() => {
+    setIsToggledAutoPomodoro(pomodoro.autoPomodoroStatus);
+  }, [pomodoro.autoPomodoroStatus]);
+  // console.log(pomodoro.autoPomodoroStatus);
+
+  useEffect(() => {
+    //updates the intervalNumber from the pomodoro context
+    setIntervalNumber(pomodoro.longBreakInterval);
+  }, [pomodoro.longBreakInterval]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const seconds = Number(value);
-    console.log("seconds", value);
+    // console.log("seconds", value);
 
     if (name === "pomodoro") {
       setPomodoroSeconds(() => seconds);
-      theme.changeSeconds(name, seconds * 60);
-      console.log(theme.theme.secondsLeft);
+      pomodoro.changeSeconds(name, seconds * 60);
+      // console.log(pomodoro.mode.secondsLeft);
     } else if (name === "shortBreak") {
       setShortBreakSeconds(seconds);
-      theme.changeSeconds(name, seconds * 60);
+      pomodoro.changeSeconds(name, seconds * 60);
     } else if (name === "longBreak") {
       setLongBreakSeconds(seconds);
-      theme.changeSeconds(name, seconds * 60);
+      pomodoro.changeSeconds(name, seconds * 60);
     }
 
     // console.log(name, seconds);
   };
 
   const handleToggleAutoBreaks = () => {
-    theme.autoBreakToggle();
+    pomodoro.autoBreakToggle();
   };
   const handleToggleAutoPomodoro = () => {
-    setIsToggledAutoPomodoro((t) => !t);
+    pomodoro.autoPomodoroToggle();
   };
 
+  //changes the interval number in the pomodoro context
+  const handleIntervalChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ): void => {
+    pomodoro.changeLongBreakInterval(Number(e.target.value));
+    // setIntervalNumber(Number(e.target.value));
+    console.log(e.target.value);
+  };
   return (
     <div className=" flex flex-col gap-3 mb-6">
       <div className="flex flex-row items-center gap-2 ">
@@ -128,6 +152,8 @@ export default function TimerSettings() {
             <input
               type="number"
               className=" w-16  h-10 rounded-lg bg-gray-200 text-center"
+              value={intervalNumber}
+              onChange={handleIntervalChange}
             />
           </div>
         </div>
