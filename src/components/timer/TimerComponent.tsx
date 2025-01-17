@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import TimerButton from "./TimerButton";
 import { usePomodoro } from "./../../hooks";
 import click from "./../../assets/buttonClick.mp3";
-
+import { colors } from "../../utils";
 let countdownInterval: number | undefined;
 const buttonClick = new Audio(click);
 
@@ -133,7 +133,11 @@ export default function TimerComponent() {
 
   return (
     <div
-      className={` h-96 w-fit   pl-28 pr-28 flex flex-col items-center rounded-xl justify-between ${pomodoro.mode.colors.componentBackgroundColor} `}
+      className={` h-96 w-fit   pl-28 pr-28 flex flex-col items-center rounded-xl justify-between ${
+        pomodoro.darkMode && pomodoro.timerIsOn
+          ? colors.gray.mainBackgroundColor
+          : pomodoro.mode.colors.componentBackgroundColor
+      } `}
     >
       <div
         className="mt-6 flex flex-row gap-5 h-10

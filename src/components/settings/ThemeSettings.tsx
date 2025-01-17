@@ -7,11 +7,15 @@ import { usePomodoro } from "../../hooks";
 export default function ThemeSettings() {
   const pomodoro = usePomodoro();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isToggled, setIsToggled] = useState<boolean>(false);
+  const [isToggled, setIsToggled] = useState<boolean>(pomodoro.darkMode);
   const [buttonId, setButtonId] = useState<string>("");
 
   const handleToggle = () => {
     setIsToggled((t) => !t);
+    // console.log(!isToggled);
+
+    pomodoro.darkModeToggle(!isToggled);
+    // console.log(!isToggled);
   };
 
   const closeModal = (): void => {

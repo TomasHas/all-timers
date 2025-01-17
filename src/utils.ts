@@ -56,6 +56,17 @@ export const colors: Record<string, ColorProperties> = {
     border: `border-lime-400`,
     taskSeparatorBg: `bg-lime-400`,
   },
+  gray: {
+    name: "gray",
+    buttonColor: `bg-gray-800`,
+    buttonFocus: `focus:bg-gray-500`,
+    buttonHover: `hover:bg-gray-300`,
+    componentBackgroundColor: `bg-gray-700`,
+    mainBackgroundColor: `bg-gray-600`,
+    TimerButtonActiveBg: `bg-gray-800`,
+    border: `border-gray-400`,
+    taskSeparatorBg: `bg-gray-400`,
+  },
 };
 
 export const pomodoroDefault = {

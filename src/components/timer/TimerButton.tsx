@@ -1,6 +1,7 @@
 import React from "react";
 import click from "./../../assets/buttonClick.mp3";
 import { usePomodoro } from "../../hooks";
+import { colors } from "../../utils";
 
 const buttonClick = new Audio(click);
 interface TimerButtonProps {
@@ -25,7 +26,9 @@ export default function TimerButton({ name, stopTimer }: TimerButtonProps) {
     <button
       id={name}
       className={`capitalize ${
-        name === pomodoro.mode.name
+        pomodoro.darkMode && pomodoro.timerIsOn
+          ? colors.gray.mainBackgroundColor
+          : name === pomodoro.mode.name
           ? pomodoro.mode.colors.TimerButtonActiveBg
           : ""
       } text-white text-lg 

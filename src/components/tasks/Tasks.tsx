@@ -5,7 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { HiPlusCircle } from "react-icons/hi";
 import { FaCircleCheck } from "react-icons/fa6";
 import { usePomodoro } from "../../hooks";
-
+import { colors } from "../../utils";
 export default function Tasks() {
   const pomodoro = usePomodoro();
   const taskManager = useRef(new TaskManager());
@@ -52,7 +52,11 @@ export default function Tasks() {
         </div>
       </div>
       <div
-        className={`h-1 w-full mb-8 border-4 ${pomodoro.mode.colors.border} `} //
+        className={`h-1 w-full mb-8 border-4 ${
+          pomodoro.darkMode && pomodoro.timerIsOn
+            ? colors.gray.mainBackgroundColor
+            : pomodoro.mode.colors.border
+        } `} //
       ></div>
       <div className=" relative mb-20 ">
         {tasks && (
@@ -84,7 +88,15 @@ export default function Tasks() {
         )}
         {!openModal && (
           <div
-            className={`flex flex-col justify-center items-center w-full rounded-xl ${pomodoro.mode.colors.border} border-dashed border-4  h-20 ${pomodoro.mode.colors.componentBackgroundColor} `}
+            className={`flex flex-col justify-center items-center w-full rounded-xl ${
+              pomodoro.darkMode && pomodoro.timerIsOn
+                ? colors.gray.mainBackgroundColor
+                : pomodoro.mode.colors.border
+            } border-dashed border-4  h-20 ${
+              pomodoro.darkMode && pomodoro.timerIsOn
+                ? colors.gray.mainBackgroundColor
+                : pomodoro.mode.colors.componentBackgroundColor
+            } `}
           >
             <div className=" flex flex-row justify-center items-center w-full ">
               <button

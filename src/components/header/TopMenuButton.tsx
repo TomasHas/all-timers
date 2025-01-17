@@ -3,6 +3,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 
 import { IoBarChartSharp } from "react-icons/io5";
 import { usePomodoro } from "../../hooks";
+import { colors } from "../../utils";
 
 interface TopMenuButtonProps {
   buttonName: string;
@@ -23,7 +24,13 @@ export default function TopMenuButton({
         <button
           onClick={handleButtonClick}
           id={buttonName}
-          className={`flex flex-row items-center w-fit gap-2 ${pomodoro.mode.colors.buttonColor} p-2 rounded-md ${pomodoro.mode.colors.buttonHover} ${pomodoro.mode.colors.buttonFocus} `}
+          className={`flex flex-row items-center w-fit gap-2 ${
+            pomodoro.darkMode && pomodoro.timerIsOn
+              ? colors.gray.mainBackgroundColor
+              : pomodoro.mode.colors.buttonColor
+          } p-2 rounded-md ${pomodoro.mode.colors.buttonHover} ${
+            pomodoro.mode.colors.buttonFocus
+          } `}
         >
           {" "}
           <IoSettingsSharp />
@@ -38,7 +45,13 @@ export default function TopMenuButton({
         <button
           onClick={handleButtonClick}
           id={buttonName}
-          className={`flex flex-row items-center w-fit gap-2 ${pomodoro.mode.colors.buttonColor} h-10 p-2 rounded-md ${pomodoro.mode.colors.buttonHover} ${pomodoro.mode.colors.buttonFocus} `}
+          className={`flex flex-row items-center w-fit gap-2 ${
+            pomodoro.darkMode && pomodoro.timerIsOn
+              ? colors.gray.mainBackgroundColor
+              : pomodoro.mode.colors.buttonColor
+          } h-10 p-2 rounded-md ${pomodoro.mode.colors.buttonHover} ${
+            pomodoro.mode.colors.buttonFocus
+          } `}
         >
           {" "}
           <IoBarChartSharp />
@@ -53,7 +66,11 @@ export default function TopMenuButton({
         <button
           onClick={handleButtonClick}
           id={buttonName}
-          className={`flex flex-row justify-center items-center w-fit text-xl ${pomodoro.mode.colors.buttonColor} h-10 p-2 rounded-md ${pomodoro?.mode.colors.buttonHover}  `}
+          className={`flex flex-row justify-center items-center w-fit text-xl ${
+            pomodoro.darkMode && pomodoro.timerIsOn
+              ? colors.gray.mainBackgroundColor
+              : pomodoro.mode.colors.buttonColor
+          } h-10 p-2 rounded-md ${pomodoro?.mode.colors.buttonHover}  `}
         >
           {" "}
           <BsThreeDotsVertical /> <p className=" text-white"></p>

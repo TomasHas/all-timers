@@ -1,4 +1,6 @@
 export type PomodoroContextType = {
+  darkModeToggle: (status: boolean) => void;
+  darkMode: boolean;
   mode: Mode;
   changeSeconds: (modeName: string, seconds: number) => void;
   toggleMode: (modeName: string) => void;

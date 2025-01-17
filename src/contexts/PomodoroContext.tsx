@@ -2,6 +2,7 @@ import { createContext, ReactNode, useEffect, useState } from "react";
 import { pomodoroDefault, longBreakDefault, shortBreakDefault } from "../utils";
 import { colors } from "../utils";
 import { PomodoroContextType, Mode } from "./../types/pomodoroTypes";
+
 type PomodoroProviderProps = {
   children: ReactNode;
 };
@@ -35,6 +36,13 @@ export default function PomodoroContextProvider({
   // const [trigger, setTrigger] = useState<boolean>(true);
   const [modeTracker, setModeTracker] = useState("pomodoro");
   const [turn, setTurn] = useState<number>(0);
+  // const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+    const savedData = localStorage.getItem("darkMode");
+    console.log("tigger");
+
+    return savedData ? JSON.parse(savedData) : false;
+  });
 
   //keeps Mode state updated.
   useEffect(() => {
@@ -47,7 +55,8 @@ export default function PomodoroContextProvider({
     if (modeTracker === "longBreak") {
       setMode(longBreak);
     }
-  }, [pomodoro, shortBreak, longBreak, modeTracker]);
+    console.log(darkMode);
+  }, [pomodoro, shortBreak, longBreak, modeTracker, darkMode]);
 
   // useEffect(() => {
   //   setMode((prevState) => ({ ...prevState }));
@@ -92,6 +101,16 @@ export default function PomodoroContextProvider({
   };
   const updateTurn = (): void => {
     setTurn((t) => t++);
+  };
+
+  const darkModeToggle = (status: boolean): unknown => {
+    console.log(status);
+
+    return setDarkMode(() => {
+      const updatedData = status;
+      localStorage.setItem("darkMode", JSON.stringify(status));
+      return updatedData;
+    });
   };
 
   const changeSeconds = (mode: string, seconds: number) => {
@@ -162,15 +181,19 @@ export default function PomodoroContextProvider({
     localStorage.removeItem("pomodoro");
     localStorage.removeItem("shortBreak");
     localStorage.removeItem("longBreak");
+    localStorage.removeItem("darkMode");
+
     setPomodoro(pomodoroDefault);
     setShortBreak(shortBreakDefault);
     setLongBreak(longBreakDefault);
+    setDarkMode(false);
   };
 
-  // console.log(theme.secondsLeft);
   return (
     <PomodoroContext.Provider
       value={{
+        darkMode,
+        darkModeToggle,
         mode,
         pomodoro,
         longBreak,
